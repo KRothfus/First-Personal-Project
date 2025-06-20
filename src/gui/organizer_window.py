@@ -83,12 +83,15 @@ class OrganizerWindow:
         pass
     
     def save(self):
-        print(self.location.bins)
+        
         bins_dict = {}
-        bins_dict[self.location] = {} 
+        k = 0
         for i in range(self.location.rows):
             for j in range(self.location.columns):
-                bins_dict[self.location] = self.location.bins[i][j]
-                
+                bins_dict[k] = {"name": self.location.bins[i][j].items[0].name,
+                "current_qty":self.location.bins[i][j].items[0].current_qty,
+                "max_qty":self.location.bins[i][j].items[0].max_qty,
+                "low_qty": self.location.bins[i][j].items[0].low_qty}
+                k += 1
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
