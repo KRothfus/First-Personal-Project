@@ -35,6 +35,6 @@ class SetupWindow:
         columns = int(self.columns_entry.get())
         location = Location(name, rows, columns)
         organizer_window = OrganizerWindow(self.master, location)
-        print(f"Created location: db_location")
+        print(f"Created location: {name}")
         
         

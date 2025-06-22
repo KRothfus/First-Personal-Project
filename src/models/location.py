@@ -6,7 +6,7 @@ class Location:
         self.name = name
         self.rows = rows
         self.columns = columns
-        self.bins = [[Bin() for _ in range(columns)] for _ in range(rows)]
+        self.bins = [[Bin(i,j) for i in range(columns)] for j in range(rows)]
     
     def __str__(self):
         return f" Location: {self.name} ({self.rows}x{self.columns})"

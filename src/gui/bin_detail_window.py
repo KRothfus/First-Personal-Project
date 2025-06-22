@@ -6,4 +6,5 @@ class BinDetailWindow:
         self.bin = bin
         self.master = master
         self.frame = ttk.Frame(self.master)
+        self.title = title
         

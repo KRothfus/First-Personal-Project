@@ -3,8 +3,9 @@
 import json
 import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import Button, ttk
 from gui.bin_detail_window import BinDetailWindow
+from models.bin import Bin
 from models.location import Location
 
 
@@ -33,18 +34,27 @@ class OrganizerWindow:
         search_button = ttk.Button(header, text="Search", command=self.search_items)
         search_button.pack(side="left",padx=5)
         
-    def create_bin_grid(self):
-        grid_frame = tk.Frame(self.frame)
-        grid_frame.pack(padx=10,pady=10)
         
+    def create_bin_grid(self):
+        grid_frame = tk.Canvas(self.frame)
+        grid_frame.pack(padx=10,pady=10)
+        k = 1
         for row in range(self.location.rows):
+            k+=1
             for col in range(self.location.columns):
                 bin = self.location.bins[row][col]
+                # btn_frame = tk.Frame(grid_frame)
+                # btn_frame.pack()
                 btn = tk.Button(grid_frame, 
                                  text = f"Bin {row*self.location.columns + col + 1}", 
                                  width=10,height=2, 
                                  command=lambda r = row, c = col: self.open_bin_details(r,c))
                 btn.grid(row=row, column=col,padx=2,pady=2)
+                
+                add_button = ttk.Button(grid_frame, text="+",width = 2,  command=self.location.bins[row][col].add_item_qty)
+                add_button.grid(row=row+k, column=col,padx=2,pady=2)
+                remove_button = ttk.Button(grid_frame, text="-", width = 2,  command=self.location.bins[row][col].remove_item_qty)
+                remove_button.grid(row=row+k, column=col,padx=2,pady=2)
                 self.update_bin_button(btn,bin)
         
     def create_footer(self):
@@ -67,7 +77,7 @@ class OrganizerWindow:
         bin = self.location.bins[row][col]
         BinDetailWindow(self.master, bin, f"Bin {row*self.location.columns + col + 1}")    
         
-    def update_bin_button(self, button, bin):
+    def update_bin_button(self, button: Button, bin: Bin):
         print("button",button)
         print("bin",bin)
         if bin.low_qty:
@@ -81,7 +91,7 @@ class OrganizerWindow:
         pass
     
     def refresh_display(self):
-        pass
+        self.create_bin_grid()
     
     def save(self):
         
@@ -89,10 +99,10 @@ class OrganizerWindow:
         k = 0
         for i in range(self.location.rows):
             for j in range(self.location.columns):
-                bins_dict[k] = {"name": self.location.bins[i][j].items[0].name,
-                "current_qty":self.location.bins[i][j].items[0].current_qty,
-                "max_qty":self.location.bins[i][j].items[0].max_qty,
-                "low_qty": self.location.bins[i][j].items[0].low_qty}
+                bins_dict[k] = {"name": self.location.bins[i][j].items.name,
+                "current_qty":self.location.bins[i][j].items.current_qty,
+                "max_qty":self.location.bins[i][j].items.max_qty,
+                "low_qty": self.location.bins[i][j].items.low_qty}
                 k += 1
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
