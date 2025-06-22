@@ -1,6 +1,7 @@
 
 
 import json
+import os
 import tkinter as tk
 from tkinter import ttk
 from gui.bin_detail_window import BinDetailWindow
@@ -13,7 +14,7 @@ class OrganizerWindow:
         self.master = master
         self.frame = tk.Frame(self.master)
         self.frame.pack(fill = tk.BOTH, expand = True)
-        
+        # self.load()
         self.create_header()
         self.create_bin_grid()
         self.create_footer()
@@ -26,7 +27,7 @@ class OrganizerWindow:
         title.pack(side=tk.LEFT, padx=10,pady=10)
         
         search_label = ttk.Label(header, text="Search:")
-        search_label.pack(side= tk.LEFT, padx=(20,5))
+        search_label.pack(side= tk.LEFT, padx=(20,5),)
         self.search_entry = ttk.Entry(header)
         self.search_entry.pack(side=tk.LEFT)
         search_button = ttk.Button(header, text="Search", command=self.search_items)
@@ -95,3 +96,13 @@ class OrganizerWindow:
                 k += 1
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
+    
+    def load(self):
+        file_path = "./data/data.json"
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+                return data
+            
+        for bin in data:
+            pass
