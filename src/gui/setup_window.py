@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 from gui.organizer_window import OrganizerWindow
 from models.location import Location
+
+
 class SetupWindow:
     def __init__(self, master):
           self.master = master
@@ -30,9 +32,9 @@ class SetupWindow:
 
           
     def create_location(self):
-        name = self.location_name_entry.get()
-        rows = int(self.rows_entry.get())
-        columns = int(self.columns_entry.get())
+        name = "Example" #self.location_name_entry.get()
+        rows = 4 #int(self.rows_entry.get())
+        columns = 4 #int(self.columns_entry.get())
         location = Location(name, rows, columns)
         organizer_window = OrganizerWindow(self.master, location)
         print(f"Created location: {name}")

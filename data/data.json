@@ -22,5 +22,77 @@
         "current_qty": 0,
         "max_qty": 100,
         "low_qty": 10
+    },
+    "4": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "5": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "6": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "7": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "8": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "9": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "10": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "11": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "12": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "13": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "14": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
+    },
+    "15": {
+        "name": "Empty",
+        "current_qty": 0,
+        "max_qty": 100,
+        "low_qty": 10
     }
 }

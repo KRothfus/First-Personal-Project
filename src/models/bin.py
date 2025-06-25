@@ -1,4 +1,4 @@
-from tkinter import ttk
+from tkinter import messagebox, ttk
 
 import tkinter as tk
 from models.item import Item
@@ -17,16 +17,33 @@ class Bin:
     # def add_item(self, item):
     #     self.items.append(item)
     
-    def add_item_qty(self):
-        self.items.current_qty += 1
-        print(f"Bin (row x col: qty): {self.row+1} x {self.col+1}: {self.items.current_qty}")
-        
-    # def remove_item(self, item):
-    #     self.items.remove(item)
+    def update_qty_from_entry(self):
+        new_qty_str = self.current_qty
+        try:
+            new_qty = int(new_qty_str)
+            if new_qty >= 0:
+                self.item_qty = new_qty
+            else:
+                self.item_qty = 0
+                messagebox.showwarning("Invalid Input", "Quantity cannot be negative. Setting to 0.")
+                self.qty_var.set(str(self.item_qty))
+        except ValueError:
+            messagebox.showerror("Invalid Input", f"Please enter a valid number for quantity. Reverting to {self.items.current_qty}.")
+            self.qty_var.set(str(self.items.current_qty))
     
+    def add_item_qty(self):
+        self.item_qty += 1
+        self.qty_var.set(str(self.items.current_qty))
+        print(f"Added to {self.items.name}. New quantity: {self.items.current_qty}")
+
     def remove_item_qty(self):
-        self.items.current_qty -= 1
-        print(f"Bin (row x col: qty): {self.row+1} x {self.col+1}: {self.items.current_qty}")
+        if self.item_qty > 0:
+            self.item_qty -= 1
+            self.qty_var.set(str(self.items.current_qty))
+            print(f"Removed from {self.items.name}. New quantity: {self.items.current_qty}")
+        else:
+            messagebox.showwarning("Quantity Error", "Quantity cannot go below zero!")
+
         
     
     @property

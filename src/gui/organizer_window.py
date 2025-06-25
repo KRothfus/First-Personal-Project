@@ -35,28 +35,84 @@ class OrganizerWindow:
         search_button.pack(side="left",padx=5)
         
         
-    def create_bin_grid(self):
-        grid_frame = tk.Canvas(self.frame)
-        grid_frame.pack(padx=10,pady=10)
-        k = 1
-        for row in range(self.location.rows):
-            k+=1
-            for col in range(self.location.columns):
-                bin = self.location.bins[row][col]
-                # btn_frame = tk.Frame(grid_frame)
-                # btn_frame.pack()
-                btn = tk.Button(grid_frame, 
-                                 text = f"Bin {row*self.location.columns + col + 1}", 
-                                 width=10,height=2, 
-                                 command=lambda r = row, c = col: self.open_bin_details(r,c))
-                btn.grid(row=row, column=col,padx=2,pady=2)
-                
-                add_button = ttk.Button(grid_frame, text="+",width = 2,  command=self.location.bins[row][col].add_item_qty)
-                add_button.grid(row=row+k, column=col,padx=2,pady=2)
-                remove_button = ttk.Button(grid_frame, text="-", width = 2,  command=self.location.bins[row][col].remove_item_qty)
-                remove_button.grid(row=row+k, column=col,padx=2,pady=2)
-                self.update_bin_button(btn,bin)
+    # def create_bin_grid(self):
+    #     grid_frame = tk.Canvas(self.frame)
+    #     grid_frame.pack(padx=10,pady=10)
+    #     k = 0
+    #     for row in range(self.location.rows):
+            
+    #         for col in range(self.location.columns):
+    #             bin = self.location.bins[row][col]
+    #             # btn_frame = tk.Frame(grid_frame)
+    #             # btn_frame.pack()
+    #             btn = tk.Button(grid_frame, 
+    #                              text = f"Bin {row*self.location.columns + col + 1}", 
+    #                              width=10,height=2, 
+    #                              command=lambda r = row, c = col: self.open_bin_details(r,c))
+    #             btn.grid(row=row+k, column=col,padx=2,pady=2)
+    #             btn_frame = tk.Canvas(grid_frame)
+    #             add_button = ttk.Button(btn_frame, text="+",width = 2,  command=self.location.bins[row][col].add_item_qty)
+    #             add_button.grid(row=row+k, column=col,padx=2,pady=2)
+    #             remove_button = ttk.Button(btn_frame, text="-", width = 2,  command=self.location.bins[row][col].remove_item_qty)
+    #             remove_button.grid(row=row+k, column=col,padx=2,pady=2)
+    #             self.update_bin_button(btn,bin)
         
+    def create_bin_grid(self):
+        grid_container_frame = tk.Frame(self.frame)
+        grid_container_frame.pack(padx=10, pady=10)
+
+        for row_idx in range(self.location.rows):
+            for col_idx in range(self.location.columns):
+                current_bin = self.location.bins[row_idx][col_idx]
+
+                bin_display_frame = tk.Frame(grid_container_frame, relief=tk.RAISED, borderwidth=1)
+                bin_display_frame.grid(row=row_idx, column=col_idx, padx=5, pady=5)
+
+                # Main Bin Button
+                bin_button = tk.Button(
+                    bin_display_frame,
+                    text=f"Bin {row_idx*self.location.columns + col_idx + 1}",
+                    width=15,
+                    height=2,
+                    command=lambda r=row_idx, c=col_idx: self.open_bin_details(r, c)
+                )
+                bin_button.grid(row=0, column=0, columnspan=3, padx=2, pady=2)
+
+                # 1. Add Button (+) - Now in column 0
+                add_button = ttk.Button(
+                    bin_display_frame,
+                    text="+",
+                    width=3,
+                    command=current_bin.add_item_qty
+                )
+                add_button.grid(row=1, column=0, padx=2, pady=2) # Changed column to 0
+
+                # 2. Quantity Entry - Remains in column 1
+                qty_entry = tk.Entry(
+                    bin_display_frame,
+                    textvariable=current_bin.current_qty,
+                    width=5,
+                    justify='center',
+                )
+                qty_entry.grid(row=1, column=1, padx=2, pady=2)
+
+                # Event bindings
+                qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.set_current_qty(qty_entry))
+                qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.set_current_qty(qty_entry))
+
+                # 3. Subtract Button (-) - Now in column 2
+                remove_button = ttk.Button(
+                    bin_display_frame,
+                    text="-",
+                    width=3,
+                    command=current_bin.remove_item_qty
+                )
+                remove_button.grid(row=1, column=2, padx=2, pady=2) # Changed column to 2
+
+                self.update_bin_button(bin_button, current_bin)
+                
+                
+
     def create_footer(self):
         footer = tk.Frame(self.frame)
         footer.pack(fill=tk.X)

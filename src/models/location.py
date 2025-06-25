@@ -2,7 +2,11 @@ from models.bin import Bin
 
 
 class Location:
-    def __init__(self, name, rows, columns):
+    DEFAULT_NAME = "Example"
+    DEFAULT_ROWS = 4
+    DEFAULT_COLS = 4
+    
+    def __init__(self, name= DEFAULT_NAME, rows = DEFAULT_ROWS, columns = DEFAULT_COLS):
         self.name = name
         self.rows = rows
         self.columns = columns
