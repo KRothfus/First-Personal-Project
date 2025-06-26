@@ -85,7 +85,7 @@ class OrganizerWindow:
                     width=3,
                     command=current_bin.add_item_qty
                 )
-                add_button.grid(row=1, column=0, padx=2, pady=2) # Changed column to 0
+                add_button.grid(row=1, column=2, padx=2, pady=2) # Changed column to 0
 
                 # 2. Quantity Entry - Remains in column 1
                 qty_entry = tk.Entry(
@@ -97,8 +97,8 @@ class OrganizerWindow:
                 qty_entry.grid(row=1, column=1, padx=2, pady=2)
 
                 # Event bindings
-                qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.set_current_qty(qty_entry))
-                qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.set_current_qty(qty_entry))
+                qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(event.widget))
+                qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(qty_entry))
 
                 # 3. Subtract Button (-) - Now in column 2
                 remove_button = ttk.Button(
@@ -107,7 +107,7 @@ class OrganizerWindow:
                     width=3,
                     command=current_bin.remove_item_qty
                 )
-                remove_button.grid(row=1, column=2, padx=2, pady=2) # Changed column to 2
+                remove_button.grid(row=1, column=0, padx=2, pady=2) # Changed column to 2
 
                 self.update_bin_button(bin_button, current_bin)
                 
