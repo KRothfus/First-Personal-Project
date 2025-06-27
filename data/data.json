@@ -1,7 +1,7 @@
 {
     "1": {
         "name": "Empty",
-        "current_qty": 0,
+        "current_qty": 52,
         "max_qty": 100,
         "low_qty": 10,
         "row": 0,

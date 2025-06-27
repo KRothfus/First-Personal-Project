@@ -3,7 +3,7 @@
 import json
 import os
 import tkinter as tk
-from tkinter import Button, ttk
+from tkinter import Button, Entry, ttk
 from gui.bin_detail_window import BinDetailWindow
 from models.bin import Bin
 from models.location import Location
@@ -44,16 +44,17 @@ class OrganizerWindow:
 
                 bin_display_frame = tk.Frame(grid_container_frame, relief=tk.RAISED, borderwidth=1)
                 bin_display_frame.grid(row=row_idx, column=col_idx, padx=5, pady=5)
-
-                # Main Bin Button
-                bin_button = tk.Button(
+                name_entry = tk.Entry(
                     bin_display_frame,
-                    text=f"Bin {row_idx*self.location.columns + col_idx + 1}",
-                    width=15,
-                    height=2,
-                    command=lambda r=row_idx, c=col_idx: self.open_bin_details(r, c)
+                    textvariable=current_bin.name_var, # Link to the bin's name_var
+                    font=("Arial", 10),
+                    width=12,
+                    justify=tk.CENTER # Center the text
                 )
-                bin_button.grid(row=0, column=0, columnspan=3, padx=2, pady=2)
+                name_entry.grid(row=0, column=0, columnspan=3, padx=2, pady=2)
+                # Bind events to update the Bin's actual item name when the user finishes editing
+                name_entry.bind("<FocusOut>", lambda event, b=current_bin: b.update_name_from_entry())
+                name_entry.bind("<Return>", lambda event, b=current_bin: b.update_name_from_entry())
 
                 # 1. Add Button (+) - Now in column 0
                 add_button = ttk.Button(
@@ -66,17 +67,8 @@ class OrganizerWindow:
 
                 # 2. Quantity Entry - Remains in column 1
                 qty_entry = tk.Label(bin_display_frame, textvariable=current_bin.current_qty_var)
-                # tk.Entry(
-                #     bin_display_frame,
-                #     textvariable=current_bin.current_qty,
-                #     width=5,
-                #     justify='center',
-                # )
                 qty_entry.grid(row=1, column=1, padx=2, pady=2)
 
-                # Event bindings
-                # qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(event.widget))
-                # qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(qty_entry))
 
                 # 3. Subtract Button (-) - Now in column 2
                 remove_button = ttk.Button(
@@ -87,7 +79,7 @@ class OrganizerWindow:
                 )
                 remove_button.grid(row=1, column=0, padx=2, pady=2) # Changed column to 2
 
-                self.update_bin_button(bin_button, current_bin)
+                self.update_bin_button(name_entry, current_bin)
                 
                 
 
@@ -111,7 +103,7 @@ class OrganizerWindow:
         bin = self.location.bins[row][col]
         BinDetailWindow(self.master, bin, f"Bin {row*self.location.columns + col + 1}")    
         
-    def update_bin_button(self, button: Button, bin: Bin):
+    def update_bin_button(self, button: Entry, bin: Bin):
         print("button",button)
         print("bin",bin)
         if bin.low_qty:
@@ -134,6 +126,7 @@ class OrganizerWindow:
         k = 1
         for i in range(self.location.rows):
             for j in range(self.location.columns):
+                
                 bins_dict[k] = {"name": self.location.bins[i][j].items.name,
                 "current_qty":self.location.bins[i][j].items.current_qty,
                 "max_qty":self.location.bins[i][j].items.max_qty,
@@ -143,6 +136,7 @@ class OrganizerWindow:
                 "name": self.location.bins[i][j].items.name
                 }
                 k += 1
+            self.update_bin_button()
         bins_dict["location_info"]= {
             "columns":self.location.columns,
             "rows": self.location.rows,
@@ -150,13 +144,5 @@ class OrganizerWindow:
             }
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
+        
         print("Saved.")
-    # def load(self):
-    #     file_path = "./data/data.json"
-    #     if os.path.exists(file_path):
-    #         with open(file_path, 'r') as file:
-    #             data = json.load(file)
-    #             return data
-            
-    #     for bin in data:
-    #         pass

@@ -39,9 +39,12 @@ class SetupWindow:
         print("hello")
         pass
         file_path = "./data/data.json"
-        # if os.path.exists(file_path):
-        with open(file_path, 'r') as file:
-            data = json.load(file)
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                data = json.load(file)
+        else:
+            print("No file exists to load.")
+            return
         location = Location(data["location_info"]["name"], data["location_info"]["rows"], data["location_info"]["columns"])
         
         for bin, info in data.items():
@@ -55,10 +58,11 @@ class SetupWindow:
             location.bins[row][col].items.current_qty = info["current_qty"]
             location.bins[row][col].items.max_qty = info["max_qty"]
             location.bins[row][col].items.low_qty = info["low_qty"]
-            location.bins[row][col].items.name = info["name"]
+            location.bins[row][col].name_var.set(info["name"])
             location.bins[row][col].row = info["row"]
             location.bins[row][col].col = info["column"]
             location.bins[row][col].current_qty_var.set(info["current_qty"])
+            
         OrganizerWindow(self.master, location)
             
               

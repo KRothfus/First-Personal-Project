@@ -12,3 +12,13 @@ class Item:
     def __str__(self):
         return f"{self.name}: {self.current_qty}/{self.max_qty}"
     
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter # <--- ADD THIS SETTER
+    def name(self, value):
+        if not isinstance(value, str) or not value.strip():
+            # You might want more sophisticated error handling or a default name
+            raise ValueError("Item name must be a non-empty string.")
+        self._name = value.strip() # Strip whitespace
