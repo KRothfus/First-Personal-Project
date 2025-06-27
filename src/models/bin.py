@@ -3,11 +3,13 @@ from tkinter import messagebox, ttk
 import tkinter as tk
 from models.item import Item
 
+
 class Bin:
     def __init__(self,col,row):
         self.items = Item()
         self.col = col
         self.row = row
+        self.current_qty_var = tk.StringVar(value=self.items.current_qty)
     
     def update_qty_from_entry(self, qty: tk.Entry):
         try:
@@ -23,10 +25,12 @@ class Bin:
     def add_item_qty(self):
         self.items.current_qty += 1
         print(f"Added to {self.items.name}. New quantity: {self.items.current_qty}")
+        self.current_qty_var.set(self.items.current_qty)
 
     def remove_item_qty(self, qty):
         if self.items.current_qty > 0:
             self.items.current_qty -= 1
+            self.current_qty_var.set(self.items.current_qty)
             print(f"Removed from {self.items.name}. New quantity: {self.items.current_qty}")
         else:
             messagebox.showwarning("Quantity Error", "Quantity cannot go below zero!")

@@ -34,29 +34,6 @@ class OrganizerWindow:
         search_button = ttk.Button(header, text="Search", command=self.search_items)
         search_button.pack(side="left",padx=5)
         
-        
-    # def create_bin_grid(self):
-    #     grid_frame = tk.Canvas(self.frame)
-    #     grid_frame.pack(padx=10,pady=10)
-    #     k = 0
-    #     for row in range(self.location.rows):
-            
-    #         for col in range(self.location.columns):
-    #             bin = self.location.bins[row][col]
-    #             # btn_frame = tk.Frame(grid_frame)
-    #             # btn_frame.pack()
-    #             btn = tk.Button(grid_frame, 
-    #                              text = f"Bin {row*self.location.columns + col + 1}", 
-    #                              width=10,height=2, 
-    #                              command=lambda r = row, c = col: self.open_bin_details(r,c))
-    #             btn.grid(row=row+k, column=col,padx=2,pady=2)
-    #             btn_frame = tk.Canvas(grid_frame)
-    #             add_button = ttk.Button(btn_frame, text="+",width = 2,  command=self.location.bins[row][col].add_item_qty)
-    #             add_button.grid(row=row+k, column=col,padx=2,pady=2)
-    #             remove_button = ttk.Button(btn_frame, text="-", width = 2,  command=self.location.bins[row][col].remove_item_qty)
-    #             remove_button.grid(row=row+k, column=col,padx=2,pady=2)
-    #             self.update_bin_button(btn,bin)
-        
     def create_bin_grid(self):
         grid_container_frame = tk.Frame(self.frame)
         grid_container_frame.pack(padx=10, pady=10)
@@ -88,17 +65,18 @@ class OrganizerWindow:
                 add_button.grid(row=1, column=2, padx=2, pady=2) # Changed column to 0
 
                 # 2. Quantity Entry - Remains in column 1
-                qty_entry = tk.Entry(
-                    bin_display_frame,
-                    textvariable=current_bin.current_qty,
-                    width=5,
-                    justify='center',
-                )
+                qty_entry = tk.Label(bin_display_frame, textvariable=current_bin.current_qty_var)
+                # tk.Entry(
+                #     bin_display_frame,
+                #     textvariable=current_bin.current_qty,
+                #     width=5,
+                #     justify='center',
+                # )
                 qty_entry.grid(row=1, column=1, padx=2, pady=2)
 
                 # Event bindings
-                qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(event.widget))
-                qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(qty_entry))
+                # qty_entry.bind("<FocusOut>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(event.widget))
+                # qty_entry.bind("<Return>", lambda event, bin_obj=current_bin: bin_obj.update_qty_from_entry(qty_entry))
 
                 # 3. Subtract Button (-) - Now in column 2
                 remove_button = ttk.Button(
@@ -123,10 +101,10 @@ class OrganizerWindow:
         status_label = ttk.Label(footer, text=f"Total Bins: {total_bins} | Low Stock Bins: { low_stock_bins}")
         status_label.pack(side=tk.LEFT, padx=10, pady=5)
         
-        refresh_button = ttk.Button(footer, text="Refresh", command=self.refresh_display())
+        refresh_button = ttk.Button(footer, text="Refresh", command=self.refresh_display)
         refresh_button.pack(side=tk.RIGHT, padx=10, pady=5)
         
-        create_save_button = ttk.Button(self.frame, text= "Save", command=self.save())
+        create_save_button = ttk.Button(self.frame, text= "Save", command=self.save)
         create_save_button.pack(side=tk.RIGHT, padx=10,pady=5)
         
     def open_bin_details(self, row, col):
@@ -147,28 +125,38 @@ class OrganizerWindow:
         pass
     
     def refresh_display(self):
-        self.create_bin_grid()
+        # self.create_bin_grid()
+        pass
     
     def save(self):
-        
+        print("Saving...")
         bins_dict = {}
-        k = 0
+        k = 1
         for i in range(self.location.rows):
             for j in range(self.location.columns):
                 bins_dict[k] = {"name": self.location.bins[i][j].items.name,
                 "current_qty":self.location.bins[i][j].items.current_qty,
                 "max_qty":self.location.bins[i][j].items.max_qty,
-                "low_qty": self.location.bins[i][j].items.low_qty}
+                "low_qty": self.location.bins[i][j].items.low_qty,
+                "row": i,
+                "column": j,
+                "name": self.location.bins[i][j].items.name
+                }
                 k += 1
+        bins_dict["location_info"]= {
+            "columns":self.location.columns,
+            "rows": self.location.rows,
+            "name": self.location.name
+            }
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
-    
-    def load(self):
-        file_path = "./data/data.json"
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as file:
-                data = json.load(file)
-                return data
+        print("Saved.")
+    # def load(self):
+    #     file_path = "./data/data.json"
+    #     if os.path.exists(file_path):
+    #         with open(file_path, 'r') as file:
+    #             data = json.load(file)
+    #             return data
             
-        for bin in data:
-            pass
+    #     for bin in data:
+    #         pass

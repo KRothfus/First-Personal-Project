@@ -1,7 +1,9 @@
 import json
+import os
 import tkinter as tk
 from tkinter import ttk
 from gui.organizer_window import OrganizerWindow
+from models.bin import Bin
 from models.location import Location
 
 
@@ -29,12 +31,41 @@ class SetupWindow:
           self.create_button = ttk.Button(self.frame, text="Create Location", command=self.create_location)
           self.create_button.grid(row=3, column=0, columnspan=2,pady=10)
           
-
+          self.load_button = ttk.Button(self.frame, text="Load", command=self.load)
+          self.load_button.grid(row=4,column=0, columnspan=2,pady=10)
           
+
+    def load(self):
+        print("hello")
+        pass
+        file_path = "./data/data.json"
+        # if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        location = Location(data["location_info"]["name"], data["location_info"]["rows"], data["location_info"]["columns"])
+        
+        for bin, info in data.items():
+            try:
+                is_bin = int(bin)
+            except:
+                break
+            print(bin)
+            row = int(info["row"])
+            col = int(info["column"])
+            location.bins[row][col].items.current_qty = info["current_qty"]
+            location.bins[row][col].items.max_qty = info["max_qty"]
+            location.bins[row][col].items.low_qty = info["low_qty"]
+            location.bins[row][col].items.name = info["name"]
+            location.bins[row][col].row = info["row"]
+            location.bins[row][col].col = info["column"]
+            location.bins[row][col].current_qty_var.set(info["current_qty"])
+        OrganizerWindow(self.master, location)
+            
+              
     def create_location(self):
-        name = "Example" #self.location_name_entry.get()
-        rows = 4 #int(self.rows_entry.get())
-        columns = 4 #int(self.columns_entry.get())
+        name = self.location_name_entry.get()
+        rows = int(self.rows_entry.get())
+        columns = int(self.columns_entry.get())
         location = Location(name, rows, columns)
         organizer_window = OrganizerWindow(self.master, location)
         print(f"Created location: {name}")

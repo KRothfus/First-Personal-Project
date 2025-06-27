@@ -10,7 +10,17 @@ class Location:
         self.name = name
         self.rows = rows
         self.columns = columns
+        
         self.bins = [[Bin(i,j) for i in range(columns)] for j in range(rows)]
+        
+        # if load_bins:
+        #     # self.items = Item()
+        #     # self.col = col
+        #     # self.row = row
+        #     # self.current_qty_var = tk.StringVar()
+        #     for bin in load_bins:
+                
+        #                 self.bins[i][j].col = load_bins[bin]
     
     def __str__(self):
         return f" Location: {self.name} ({self.rows}x{self.columns})"
