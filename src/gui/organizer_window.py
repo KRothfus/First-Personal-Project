@@ -4,6 +4,7 @@ import json
 import os
 import tkinter as tk
 from tkinter import Button, Entry, ttk
+from tkinter import messagebox
 from gui.bin_detail_window import BinDetailWindow
 from models.bin import Bin
 from models.location import Location
@@ -116,6 +117,7 @@ class OrganizerWindow:
             button.config(bg="green")
     
     def search_items(self):
+        messagebox.showwarning("Not implemented","Search has not yet been implemented, but will at a later date!")
         print("Function not implemented yet.")
         pass
     

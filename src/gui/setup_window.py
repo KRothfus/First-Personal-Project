@@ -59,6 +59,7 @@ class SetupWindow:
             location.bins[row][col].items.max_qty = info["max_qty"]
             location.bins[row][col].items.low_qty = info["low_qty"]
             location.bins[row][col].name_var.set(info["name"])
+            location.bins[row][col].update_name_from_entry()
             location.bins[row][col].row = info["row"]
             location.bins[row][col].col = info["column"]
             location.bins[row][col].current_qty_var.set(info["current_qty"])

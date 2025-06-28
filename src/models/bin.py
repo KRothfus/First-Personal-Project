@@ -10,7 +10,7 @@ class Bin:
         self.col = col
         self.row = row
         self.current_qty_var = tk.StringVar(value=self.items.current_qty)
-        self.name_var = tk.StringVar(value=self.items.name)
+        self.name_var = tk.StringVar()
     def update_qty_from_entry(self, qty: tk.Entry):
         try:
             new_qty = int(qty.get())
