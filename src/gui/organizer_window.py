@@ -116,6 +116,7 @@ class OrganizerWindow:
             button.config(bg="green")
     
     def search_items(self):
+        print("Function not implemented yet.")
         pass
     
     def refresh_display(self):
