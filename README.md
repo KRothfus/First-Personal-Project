@@ -9,7 +9,7 @@ You simply run the program and you are greeted with a prompt to create a new org
 
 
 <video width="640" height="360" controls>
-  <source src="organizerAddParts.mp4" type="video/mp4">
+  <source src="./organizerAddParts.mp4" type="video/mp4">
 </video>
 
 
