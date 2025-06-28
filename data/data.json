@@ -1,14 +1,14 @@
 {
     "1": {
-        "name": "Empty",
-        "current_qty": 36,
+        "name": "Plates",
+        "current_qty": 50,
         "max_qty": 100,
         "low_qty": 10,
         "row": 0,
         "column": 0
     },
     "2": {
-        "name": "Empty",
+        "name": "Nuts",
         "current_qty": 53,
         "max_qty": 100,
         "low_qty": 10,
@@ -16,7 +16,7 @@
         "column": 1
     },
     "3": {
-        "name": "Empty",
+        "name": "Bolts",
         "current_qty": 2,
         "max_qty": 100,
         "low_qty": 10,
@@ -24,8 +24,8 @@
         "column": 0
     },
     "4": {
-        "name": "Empty",
-        "current_qty": 11,
+        "name": "Pins",
+        "current_qty": 9,
         "max_qty": 100,
         "low_qty": 10,
         "row": 1,
