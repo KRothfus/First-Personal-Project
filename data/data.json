@@ -1,7 +1,7 @@
 {
     "1": {
         "name": "Empty",
-        "current_qty": 52,
+        "current_qty": 36,
         "max_qty": 100,
         "low_qty": 10,
         "row": 0,
@@ -9,7 +9,7 @@
     },
     "2": {
         "name": "Empty",
-        "current_qty": 0,
+        "current_qty": 53,
         "max_qty": 100,
         "low_qty": 10,
         "row": 0,
@@ -17,7 +17,7 @@
     },
     "3": {
         "name": "Empty",
-        "current_qty": 0,
+        "current_qty": 2,
         "max_qty": 100,
         "low_qty": 10,
         "row": 1,
@@ -25,7 +25,7 @@
     },
     "4": {
         "name": "Empty",
-        "current_qty": 0,
+        "current_qty": 11,
         "max_qty": 100,
         "low_qty": 10,
         "row": 1,

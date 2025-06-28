@@ -9,6 +9,7 @@ from models.bin import Bin
 from models.location import Location
 
 
+name_entry = None
 class OrganizerWindow:
     def __init__(self, master, location: Location):
         self.location = location
@@ -16,6 +17,7 @@ class OrganizerWindow:
         self.frame = tk.Frame(self.master)
         self.frame.pack(fill = tk.BOTH, expand = True)
         # self.load()
+        self.name_display = self.bin_display_buttons = [[None for _ in range(self.location.columns)] for _ in range(self.location.rows)]
         self.create_header()
         self.create_bin_grid()
         self.create_footer()
@@ -55,7 +57,7 @@ class OrganizerWindow:
                 # Bind events to update the Bin's actual item name when the user finishes editing
                 name_entry.bind("<FocusOut>", lambda event, b=current_bin: b.update_name_from_entry())
                 name_entry.bind("<Return>", lambda event, b=current_bin: b.update_name_from_entry())
-
+                self.name_display[row_idx][col_idx] = name_entry
                 # 1. Add Button (+) - Now in column 0
                 add_button = ttk.Button(
                     bin_display_frame,
@@ -93,8 +95,8 @@ class OrganizerWindow:
         status_label = ttk.Label(footer, text=f"Total Bins: {total_bins} | Low Stock Bins: { low_stock_bins}")
         status_label.pack(side=tk.LEFT, padx=10, pady=5)
         
-        refresh_button = ttk.Button(footer, text="Refresh", command=self.refresh_display)
-        refresh_button.pack(side=tk.RIGHT, padx=10, pady=5)
+        # refresh_button = ttk.Button(footer, text="Refresh", command=self.refresh_display)
+        # refresh_button.pack(side=tk.RIGHT, padx=10, pady=5)
         
         create_save_button = ttk.Button(self.frame, text= "Save", command=self.save)
         create_save_button.pack(side=tk.RIGHT, padx=10,pady=5)
@@ -117,8 +119,8 @@ class OrganizerWindow:
         pass
     
     def refresh_display(self):
-        # self.create_bin_grid()
-        pass
+        self.create_bin_grid()
+        
     
     def save(self):
         print("Saving...")
@@ -136,7 +138,7 @@ class OrganizerWindow:
                 "name": self.location.bins[i][j].items.name
                 }
                 k += 1
-            self.update_bin_button()
+                self.update_bin_button(self.name_display[i][j], self.location.bins[i][j])
         bins_dict["location_info"]= {
             "columns":self.location.columns,
             "rows": self.location.rows,
@@ -144,5 +146,5 @@ class OrganizerWindow:
             }
         with open("./data/data.json","w") as json_file:
             json.dump(bins_dict,json_file,indent=4)
-        
         print("Saved.")
+        

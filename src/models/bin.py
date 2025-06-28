@@ -27,7 +27,7 @@ class Bin:
         print(f"Added to {self.items.name}. New quantity: {self.items.current_qty}")
         self.current_qty_var.set(self.items.current_qty)
 
-    def remove_item_qty(self, qty):
+    def remove_item_qty(self):
         if self.items.current_qty > 0:
             self.items.current_qty -= 1
             self.current_qty_var.set(self.items.current_qty)
