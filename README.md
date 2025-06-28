@@ -8,9 +8,7 @@ Have you been frustrated when you run out of 1/4-20 screws out without even real
 You simply run the program and you are greeted with a prompt to create a new organizer with the name and number of rows and columns OR you can load an already saved organizer that is saved locally to your machine. You can increment or decrement the qty of the bin and rename each bin as you please!
 
 
-<video width="640" height="360" controls>
-  <source src="./organizerAddParts.mp4" type="video/mp4">
-</video>
+[![Watch the video](https://github.com/KRothfus/First-Personal-Project/blob/master/organizerAddParts.mp4)](https://github.com/KRothfus/First-Personal-Project/blob/master/organizerAddParts.mp4)
 
 
 
