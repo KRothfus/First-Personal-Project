@@ -19,15 +19,35 @@ You simply run the program and you are greeted with a prompt to create a new org
 To install:
 
 Ensure that pip is installed:
+Choose one of the following - 
 ```bash
-python3 install pip
+pip --version
+```
+```bash
+pip3 --version
+```
+```bash
+python -m pip --version
+```
+```bash
+python3 -m pip --version
+```
+Install/Update as needed:
+If the above version check didn't work then download get-pip.py and run:
+```bash
+python get-pip.py
+```
+OR update:
+```bash
+python -m upgrade pip
 ```
 
 Then install the requirements.txt
 ```bash
 pip install -r requirements.txt
-
 ```
+
+
 Finally, run the program with:
 ```bash
 python ./src/main.py
